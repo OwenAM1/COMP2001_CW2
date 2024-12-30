@@ -1,1 +1,124 @@
+openapi: 3.0.0
+info:
+  title: "RP Flask REST API"
+  description: "An API about trails"
+  version: "1.0.0"
 
+servers:
+  - url: "/api"
+
+components:
+  schemas:
+    Trail:
+      type: "object"
+      required:
+        - Trail_Name
+      properties:
+        Trail_Name:
+          type: "string"
+        Trail_Summary:
+          type: "string"
+        Trail_Description:
+          type: "string"
+        Difficulty:
+          type: "string"
+        Location:
+          type: "string"
+        Length:
+          type: "number"
+          format: "float"
+        Elevation_gain:
+          type: "number"
+          format: "float"
+        Route_type:
+          type: "string"
+        OwnerID:
+          type: "integer"
+        Pt1_Lat:
+          type: "number"
+          format: "float"
+        Pt1_Long:
+          type: "number"
+          format: "float"
+        Pt1_Desc:
+          type: "string"
+        Pt2_Lat:
+          type: "number"
+          format: "float"
+        Pt2_Long:
+          type: "number"
+          format: "float"
+        Pt2_Desc:
+          type: "string"
+  parameters:
+    Trail_Name:
+      name: "Trail_Name"
+      description: "Name of the trail"
+      in: path
+      required: true
+      schema:
+        type: "string"
+
+paths:
+  /trails:
+    get:
+      operationId: "Trail.read_all"  # Correct operation ID
+      tags:
+        - "Trails"
+      summary: "Read the list of trails"
+      responses:
+        "200":
+          description: "Successfully read trails list"
+    post:
+      operationId: "Trail.create"  # Correct operation ID
+      tags:
+        - "Trails"
+      summary: "Create a new trail"
+      requestBody:
+        description: "Trail to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: "trail"
+              $ref: "#/components/schemas/Trail"
+      responses:
+        "201":
+          description: "Successfully created trail"
+  /trails/{Trail_Name}:
+    get:
+      operationId: "Trail.read_one"  # Correct operation ID
+      tags:
+        - "Trails"
+      summary: "Read one trail"
+      parameters:
+        - $ref: "#/components/parameters/Trail_Name"
+      responses:
+        "200":
+          description: "Successfully read trail"
+    put:
+      tags:
+        - "Trails"
+      operationId: "Trail.update"  # Correct operation ID
+      summary: "Update a trail"
+      parameters:
+        - $ref: "#/components/parameters/Trail_Name"
+      responses:
+        "200":
+          description: "Successfully updated trail"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "trail"
+              $ref: "#/components/schemas/Trail"
+    delete:
+      tags:
+        - "Trails"
+      operationId: "Trail.delete"  # Correct operation ID
+      summary: "Delete a trail"
+      parameters:
+        - $ref: "#/components/parameters/Trail_Name"
+      responses:
+        "204":
+          description: "Successfully deleted trail"
