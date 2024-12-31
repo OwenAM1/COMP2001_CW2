@@ -6,6 +6,18 @@
 <title>RP Flask REST API</title>
 </head>
 <body>
-    Hello
+   <h1>
+      Hello, People!
+   </h1>
+   {% for Trail in trails %}
+   <h2>{{ person.fname }} {{ person.lname }}</h2>
+   <ul>
+       {% for note in person.notes %}
+      <li>
+         {{ note.content }}
+      </li>
+      {% endfor %}
+   </ul>
+   {% endfor %}
 </body>
 </html>

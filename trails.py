@@ -4,6 +4,7 @@ from flask import abort, make_response
 from config import db
 from models import Trail, trails_schema, trail_schema
 
+print("Trails.py is run")
 
 def read_all():
     trails_list = Trail.query.all()

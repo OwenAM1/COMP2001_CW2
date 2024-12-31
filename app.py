@@ -2,7 +2,7 @@
 
 from flask import render_template
 import config
-from models import Trail
+from models import Trail, trail_schema, trails_schema  # Ensure proper import
 import connexion  # Ensure this import is here for proper app setup
 
 # Initialize the Connexion app correctly with Flask
