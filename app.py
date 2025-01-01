@@ -4,6 +4,10 @@ from flask import render_template
 
 import config
 from models import Trail
+<<<<<<< HEAD
+=======
+import connexion  # Ensure this import is here for proper app setup
+>>>>>>> parent of a9aad22 (Last save before restarting)
 
 
 app = config.connex_app
