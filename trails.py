@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # trails.py
 
 from flask import abort, make_response
@@ -71,4 +69,3 @@ def delete(trail_name):
         return make_response(f"Trail with name {trail_name} successfully deleted", 200)
     else:
         abort(404, f"Trail with name {trail_name} not found")
->>>>>>> parent of a9aad22 (Last save before restarting)

@@ -1,9 +1,7 @@
-# swagger.yml
-
 openapi: 3.0.0
 info:
-  title: "RP Flask REST API"
-  description: "An API about people and notes"
+  title: "Trail Management API"
+  description: "API for managing trails"
   version: "1.0.0"
 
 servers:
@@ -14,144 +12,107 @@ components:
     Trail:
       type: "object"
       required:
-        - trail_Name
+        - Trail_Name
       properties:
-        trail_Name:
+        TrailID:
+          type: "integer"
+          description: "Unique identifier for the trail"
+        Trail_Name:
           type: "string"
-        trail_Description:
+          description: "Name of the trail"
+        Trail_Summary:
           type: "string"
+          description: "Brief summary of the trail"
+        Trail_Description:
+          type: "string"
+          description: "Detailed description of the trail"
   parameters:
-    trail_Name:
-      name: "trail_Name"
-      description: "Name of the Trail to get"
+    TrailId:
+      name: "TrailID"
       in: path
-      required: True
+      description: "ID of the trail"
+      required: true
       schema:
-        type: "string"
-
+        type: "integer"
 
 paths:
   /trails:
     get:
       operationId: "trails.read_all"
       tags:
-        - "People"
-      summary: "Read the list of people"
+        - "Trails"
+      summary: "Retrieve a list of all trails"
       responses:
         "200":
-          description: "Successfully read people list"
-    post:
-      operationId: "people.create"
-      tags:
-        - People
-      summary: "Create a person"
-      requestBody:
-          description: "Person to create"
-          required: True
+          description: "List of trails retrieved successfully"
           content:
             application/json:
               schema:
-                x-body-name: "person"
-                $ref: "#/components/schemas/Person"
-      responses:
-        "201":
-          description: "Successfully created person"
-  /people/{lname}:
-    get:
-      operationId: "people.read_one"
+                type: array
+                items:
+                  $ref: "#/components/schemas/Trail"
+    post:
+      operationId: "trails.create"
       tags:
-        - People
-      summary: "Read one person"
-      parameters:
-        - $ref: "#/components/parameters/lname"
-      responses:
-        "200":
-          description: "Successfully read person"
-    put:
-      tags:
-        - People
-      operationId: "people.update"
-      summary: "Update a person"
-      parameters:
-        - $ref: "#/components/parameters/lname"
-      responses:
-        "200":
-          description: "Successfully updated person"
+        - "Trails"
+      summary: "Create a new trail"
       requestBody:
+        description: "Trail to create"
+        required: true
         content:
           application/json:
             schema:
-              x-body-name: "person"
-              $ref: "#/components/schemas/Person"
-    delete:
-      tags:
-        - People
-      operationId: "people.delete"
-      summary: "Delete a person"
-      parameters:
-        - $ref: "#/components/parameters/lname"
+              $ref: "#/components/schemas/Trail"
       responses:
-        "204":
-          description: "Successfully deleted person"
-  /notes:
-    post:
-      operationId: "notes.create"
-      tags:
-        - Notes
-      summary: "Create a note associated with a person"
-      requestBody:
-          description: "Note to create"
-          required: True
+        "201":
+          description: "Trail created successfully"
           content:
             application/json:
               schema:
-                x-body-name: "note"
-                type: "object"
-                properties:
-                  person_id:
-                    type: "integer"
-                  content:
-                    type: "string"
-      responses:
-        "201":
-          description: "Successfully created a note"
-  /notes/{note_id}:
+                $ref: "#/components/schemas/Trail"
+  /trails/{TrailID}:
     get:
-      operationId: "notes.read_one"
+      operationId: "trails.read_one"
       tags:
-        - Notes
-      summary: "Read one note"
+        - "Trails"
+      summary: "Retrieve details of a specific trail"
       parameters:
-        - $ref: "#/components/parameters/note_id"
+        - $ref: "#/components/parameters/TrailId"
       responses:
         "200":
-          description: "Successfully read one note"
+          description: "Trail details retrieved successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trail"
     put:
+      operationId: "trails.update"
       tags:
-        - Notes
-      operationId: "notes.update"
-      summary: "Update a note"
+        - "Trails"
+      summary: "Update details of a specific trail"
       parameters:
-        - $ref: "#/components/parameters/note_id"
-      responses:
-        "200":
-          description: "Successfully updated note"
+        - $ref: "#/components/parameters/TrailId"
       requestBody:
+        description: "Trail data to update"
+        required: true
         content:
           application/json:
             schema:
-              x-body-name: "note"
-              type: "object"
-              properties:
-                content:
-                  type: "string"
+              $ref: "#/components/schemas/Trail"
+      responses:
+        "200":
+          description: "Trail updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trail"
     delete:
+      operationId: "trails.delete"
       tags:
-        - Notes
-      operationId: "notes.delete"
-      summary: "Delete a note"
+        - "Trails"
+      summary: "Delete a specific trail"
       parameters:
-        - $ref: "#/components/parameters/note_id"
+        - $ref: "#/components/parameters/TrailId"
       responses:
         "204":
-          description: "Successfully deleted note"
+          description: "Trail deleted successfully"
